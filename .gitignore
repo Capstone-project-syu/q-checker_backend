@@ -1,3 +1,11 @@
+HELP.md
+.gradle
+build/
+logs/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
 # Created by https://www.toptal.com/developers/gitignore/api/macos,intellij,java
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,intellij,java
 
@@ -54,6 +62,10 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
+.idea
+*.iml
+*.ipr
+*.iws
 out/
 
 # mpeltonen/sbt-idea plugin
