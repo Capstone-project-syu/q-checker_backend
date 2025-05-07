@@ -2,16 +2,23 @@ package syu.qchecker.user.ui;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
-@Tag(name = "User API", description = "User 관련 API")
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+@Tag(name = "User 관리", description = "User 관련 API")
 public class UserController {
 
-    @Operation(summary = "예시 API", description = "예시 API입니다.")
-    @GetMapping("/users/{id}")
-    public String getUser() {
-        return "유저 정보";
+    @Operation(summary = "내 정보 조회", description = "현재 로그인한 사용자의 정보를 반환합니다.")
+    @GetMapping("/me")
+    public ResponseEntity<Map<String, Object>> getCurrentUser(@AuthenticationPrincipal OAuth2User principal) {
+        return ResponseEntity.ok(principal.getAttributes());
     }
 }

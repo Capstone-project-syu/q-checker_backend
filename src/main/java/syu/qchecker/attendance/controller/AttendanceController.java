@@ -20,16 +20,16 @@ public class AttendanceController {
 
     private final AttendanceService attendanceService;
 
-    @PostMapping("/check")
     @Operation(summary = "QR 출석 체크", description = "QR코드와 GPS 위치를 검증하여 출석을 체크합니다.")
+    @PostMapping("/check")
     public ResponseEntity<Attendances> checkAttendance(
             @RequestBody AttendanceCheckRequest request,
             @AuthenticationPrincipal OAuth2User principal) {
         return ResponseEntity.ok(attendanceService.checkAttendance(request, principal));
     }
 
-    @GetMapping("/event/{eventId}")
     @Operation(summary = "이벤트별 출석 목록 조회", description = "특정 이벤트의 모든 출석 기록을 조회합니다.")
+    @GetMapping("/event/{eventId}")
     public ResponseEntity<List<Attendances>> getAttendancesByEvent(@PathVariable Long eventId) {
         return ResponseEntity.ok(attendanceService.findByEventId(eventId));
     }
