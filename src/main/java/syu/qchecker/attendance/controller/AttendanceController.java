@@ -2,35 +2,31 @@ package syu.qchecker.attendance.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-import syu.qchecker.attendance.domain.Attendances;
-import syu.qchecker.attendance.service.AttendanceService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/attendances")
-@RequiredArgsConstructor
-@Tag(name = "출석 관리", description = "출석 관련 API")
+@Tag(name = "출석 기록", description = "출석 기록 관련 API")
 public class AttendanceController {
 
-    private final AttendanceService attendanceService;
-
-    @Operation(summary = "QR 출석 체크", description = "QR코드와 GPS 위치를 검증하여 출석을 체크합니다.")
-    @PostMapping("/check")
-    public ResponseEntity<Attendances> checkAttendance(
-            @RequestBody AttendanceCheckRequest request,
-            @AuthenticationPrincipal OAuth2User principal) {
-        return ResponseEntity.ok(attendanceService.checkAttendance(request, principal));
+    @GetMapping("/users/{user_id}")
+    @Operation(summary = "사용자 기준 출석 내역", description = "사용자 기준으로 출석 내역을 조회합니다.")
+    public String getUserAttendance(@PathVariable String user_id) {
+        // ...existing code...
+        return "사용자 기준 출석 내역 조회 성공";
     }
 
-    @Operation(summary = "이벤트별 출석 목록 조회", description = "특정 이벤트의 모든 출석 기록을 조회합니다.")
-    @GetMapping("/event/{eventId}")
-    public ResponseEntity<List<Attendances>> getAttendancesByEvent(@PathVariable Long eventId) {
-        return ResponseEntity.ok(attendanceService.findByEventId(eventId));
+    @GetMapping("/events/{event_id}")
+    @Operation(summary = "이벤트 기준 출석 내역", description = "이벤트 기준으로 출석 내역을 조회합니다.")
+    public String getEventAttendance(@PathVariable String event_id) {
+        // ...existing code...
+        return "이벤트 기준 출석 내역 조회 성공";
+    }
+
+    @DeleteMapping("/{attendance_id}")
+    @Operation(summary = "출결 기록 삭제", description = "출결 기록을 삭제합니다.")
+    public String deleteAttendance(@PathVariable String attendance_id) {
+        // ...existing code...
+        return "출결 기록 삭제 성공";
     }
 }

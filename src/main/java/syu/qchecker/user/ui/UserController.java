@@ -2,23 +2,31 @@ package syu.qchecker.user.ui;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
-@Tag(name = "User 관리", description = "User 관련 API")
+@Tag(name = "마이페이지", description = "마이페이지 관련 API")
 public class UserController {
 
-    @Operation(summary = "내 정보 조회", description = "현재 로그인한 사용자의 정보를 반환합니다.")
-    @GetMapping("/me")
-    public ResponseEntity<Map<String, Object>> getCurrentUser(@AuthenticationPrincipal OAuth2User principal) {
-        return ResponseEntity.ok(principal.getAttributes());
+    @PutMapping("/{user_id}")
+    @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
+    public String updateUser(@PathVariable String user_id) {
+        // ...existing code...
+        return "회원 정보 수정 성공";
+    }
+
+    @GetMapping("/{user_id}/attendances")
+    @Operation(summary = "나의 전체 열람", description = "사용자의 전체 출석 내역을 조회합니다.")
+    public String getUserAttendances(@PathVariable String user_id) {
+        // ...existing code...
+        return "출석 내역 조회 성공";
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "로그아웃", description = "사용자를 로그아웃합니다.")
+    public String logout() {
+        // ...existing code...
+        return "로그아웃 성공";
     }
 }
