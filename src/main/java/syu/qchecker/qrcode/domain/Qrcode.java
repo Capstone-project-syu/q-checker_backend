@@ -3,13 +3,12 @@ package syu.qchecker.qrcode.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import syu.qchecker.common.BaseTimeEntity;
 import syu.qchecker.event.domain.Event;
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "qr_codes")
 @Getter @Setter
-public class Qrcode {
+public class Qrcode extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +21,4 @@ public class Qrcode {
 
     @Column(name = "status", nullable = true, columnDefinition = "VARCHAR(1) NULL")
     private String status;
-
-    @Column(name = "created_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
 }

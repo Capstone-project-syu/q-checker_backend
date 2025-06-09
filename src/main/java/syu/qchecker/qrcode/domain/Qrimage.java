@@ -3,13 +3,14 @@ package syu.qchecker.qrcode.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import syu.qchecker.common.BaseTimeEntity;
 import syu.qchecker.event.domain.Event;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "qr_images")
 @Getter @Setter
-public class Qrimage {
+public class Qrimage extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +27,4 @@ public class Qrimage {
 
     @Column(name = "image_url", nullable = false, columnDefinition = "VARCHAR(255) NOT NULL")
     private String imageUrl;
-
-    @Column(name = "created_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
 }

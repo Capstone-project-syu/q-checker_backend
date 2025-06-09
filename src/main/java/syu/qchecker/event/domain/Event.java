@@ -3,13 +3,14 @@ package syu.qchecker.event.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import syu.qchecker.common.BaseTimeEntity;
 import syu.qchecker.user.domain.User;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
 @Getter @Setter
-public class Event {
+public class Event extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,10 +41,4 @@ public class Event {
 
     @Column(name = "valid_radius", nullable = true, columnDefinition = "FLOAT NULL")
     private Float validRadius;
-
-    @Column(name = "created_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
 }
