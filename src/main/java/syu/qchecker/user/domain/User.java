@@ -1,15 +1,19 @@
 package syu.qchecker.user.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDateTime;
+import syu.qchecker.common.BaseTimeEntity;
 
 @Entity
 @Table(name = "users")
-@Getter @Setter
-public class User {
-
+@Setter
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, columnDefinition = "BIGINT COMMENT '유저 고유 id'")
@@ -30,9 +34,17 @@ public class User {
     @Column(name = "student_number", nullable = true, columnDefinition = "BIGINT NULL")
     private Long studentNumber;
 
-    @Column(name = "created_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
+    @Builder
+    public User(String email, String name, String socialType, String socialId, Long studentNumber) {
+        this.email = email;
+        this.name = name;
+        this.socialType = socialType;
+        this.socialId = socialId;
+        this.studentNumber = studentNumber;
+    }
 
-    @Column(name = "updated_at", nullable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
+    public User update(String name) {
+        this.name = name;
+        return this;
+    }
 }
