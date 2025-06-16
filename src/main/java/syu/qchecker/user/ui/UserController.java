@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import syu.qchecker.user.dto.UserCreateDto;
 import syu.qchecker.user.dto.UserDto;
 import syu.qchecker.user.service.UserService;
+import syu.qchecker.auth.dto.SessionUserDto;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/users")
@@ -15,6 +17,7 @@ import syu.qchecker.user.service.UserService;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final HttpSession httpSession;
 
     @PostMapping
     @Operation(summary = "회원 가입", description = "소셜 로그인을 통해 회원가입을 합니다.")
@@ -45,6 +48,7 @@ public class UserController {
     @PostMapping("/logout")
     @Operation(summary = "로그아웃", description = "사용자를 로그아웃합니다.")
     public ResponseEntity<String> logout() {
+        httpSession.invalidate();
         return ResponseEntity.ok("로그아웃 성공");
     }
 }

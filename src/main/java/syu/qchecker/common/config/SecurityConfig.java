@@ -41,11 +41,9 @@ public class SecurityConfig {
             )
             .oauth2Login(oauth -> oauth
                 .loginPage("/")
-                .defaultSuccessUrl("/", true)
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
             )
             .sessionManagement(session -> session
