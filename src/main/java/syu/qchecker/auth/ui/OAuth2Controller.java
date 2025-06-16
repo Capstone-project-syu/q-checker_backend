@@ -16,4 +16,9 @@ public class OAuth2Controller {
     public void loginGoogle(HttpServletResponse response) throws IOException {
         response.sendRedirect("/oauth2/authorization/google");
     }
+
+    @GetMapping("/login-success")
+    public String loginSuccess() {
+        return "로그인 성공";
+    }
 } 

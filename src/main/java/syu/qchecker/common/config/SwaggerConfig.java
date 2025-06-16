@@ -23,7 +23,11 @@ public class SwaggerConfig {
                         .contact(new Contact()
                                 .name("관리자")
                                 .email("admin@example.com")))
-                .servers(List.of(new Server().url("http://localhost:8080")))
+                .servers(List.of(
+                        new Server().url("https://api.qchecker.me").description("배포 서버"),
+                        new Server().url("http://localhost:8080").description("로컬 서버")
+))
+
                 .tags(List.of(
                         new Tag().name("마이페이지").description("마이페이지 관련 API"),
                         new Tag().name("출석 기록").description("출석 기록 관련 API"),
