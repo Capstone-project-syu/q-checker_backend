@@ -1,15 +1,17 @@
 package syu.qchecker.attendance.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import syu.qchecker.common.BaseTimeEntity;
 import syu.qchecker.event.domain.Event;
 import syu.qchecker.user.domain.User;
 
 @Entity
 @Table(name = "attendances")
-@Getter @Setter
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Attendances extends BaseTimeEntity{
 
     @Id

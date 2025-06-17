@@ -1,13 +1,19 @@
 package syu.qchecker.qrcode.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import syu.qchecker.common.BaseTimeEntity;
 import syu.qchecker.event.domain.Event;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "qr_codes")
-@Getter @Setter
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Qrcode extends BaseTimeEntity {
 
     @Id
@@ -21,4 +27,7 @@ public class Qrcode extends BaseTimeEntity {
 
     @Column(name = "status", nullable = true, columnDefinition = "VARCHAR(1) NULL")
     private String status;
+
+    @OneToMany(mappedBy = "qrcode", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Qrimage> qrImages = new ArrayList<>();
 }

@@ -35,6 +35,7 @@ dependencies {
 	implementation ("com.google.zxing:core:3.5.2")
 	implementation ("com.google.zxing:javase:3.5.2")
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	implementation("software.amazon.awssdk:s3:2.20.33")
 
 	compileOnly("org.projectlombok:lombok")
 
