@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import syu.qchecker.user.domain.User;
 import syu.qchecker.user.repository.UserRepository;
-import syu.qchecker.auth.jwt.JwtTokenProvider;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
-                                    throws ServletException, IOException {
+            throws ServletException, IOException {
         String token = resolveToken(request);
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
@@ -36,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .orElseThrow(() -> new RuntimeException("사용자 없음"));
 
             UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(user, null, List.of());
+                    new UsernamePasswordAuthenticationToken(user, null, List.of());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

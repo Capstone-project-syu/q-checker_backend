@@ -21,8 +21,8 @@ import syu.qchecker.user.repository.UserRepository;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtTokenProvider jwtTokenProvider; // ✅ 필드 주입
-    private final UserRepository userRepository;     // ✅ 필드 주입
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -32,25 +32,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .formLogin(AbstractHttpConfigurer::disable)
-            .csrf(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/api/auth/**", "/oauth2/**", "/login/**",
-                                 "/css/**", "/js/**", "/images/**", "swagger-ui.html")
-                .permitAll()
-                .requestMatchers("/api/users/**").authenticated()
-                .anyRequest().permitAll()
-            )
-            .oauth2Login(oauth -> oauth
-                .loginPage("/")
-                .defaultSuccessUrl("https://api.qchecker.me/api/auth/login-success", true))
-            .logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-            .addFilterBefore(
-                new JwtAuthenticationFilter(jwtTokenProvider, userRepository),
-                UsernamePasswordAuthenticationFilter.class
-            );
+                .formLogin(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/api/auth/**", "/oauth2/**", "/login/**",
+                                "/css/**", "/js/**", "/images/**", "swagger-ui.html")
+                        .permitAll()
+                        .requestMatchers("/api/users/**").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/")
+                        .defaultSuccessUrl("https://api.qchecker.me/api/auth/login-success", true))
+                .logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .addFilterBefore(
+                        new JwtAuthenticationFilter(jwtTokenProvider, userRepository),
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         return http.build();
     }

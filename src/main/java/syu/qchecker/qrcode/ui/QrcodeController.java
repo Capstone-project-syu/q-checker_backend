@@ -20,7 +20,7 @@ public class QrcodeController {
     @PostMapping
     @Operation(summary = "qr코드 생성", description = "이벤트 생성 후, 해당 이벤트의 출석 qr코드를 생성한다.")
     public ResponseEntity<QrimageResponseDto> createQrEvent(@RequestBody QrcodeRequestDto qrcodeRequestDto,
-                                                 @AuthenticationPrincipal User user) {
+                                                            @AuthenticationPrincipal User user) {
         QrimageResponseDto response = qrcodeService.createQrcode(qrcodeRequestDto, user);
         return ResponseEntity.ok(response);
     }

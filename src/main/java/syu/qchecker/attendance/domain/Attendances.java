@@ -12,7 +12,7 @@ import syu.qchecker.user.domain.User;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Attendances extends BaseTimeEntity{
+public class Attendances extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

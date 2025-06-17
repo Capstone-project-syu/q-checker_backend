@@ -26,7 +26,7 @@ public class SwaggerConfig {
                 .servers(List.of(
                         new Server().url("https://api.qchecker.me").description("배포 서버"),
                         new Server().url("http://localhost:8080").description("로컬 서버")
-))
+                ))
 
                 .tags(List.of(
                         new Tag().name("마이페이지").description("마이페이지 관련 API"),

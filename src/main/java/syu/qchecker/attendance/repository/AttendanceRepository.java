@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface AttendanceRepository extends JpaRepository<Attendances, Long> {
     List<Attendances> findByUser(User user);
+
     List<Attendances> findByEvent(Event event);
+
     boolean existsByUserAndEvent(User user, Event event);
 }

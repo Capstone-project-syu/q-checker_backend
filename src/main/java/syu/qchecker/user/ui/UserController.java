@@ -30,7 +30,7 @@ public class UserController {
     @PutMapping
     @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
     public ResponseEntity<UserResponseDto> updateUserInfo(@RequestBody UserRequestDto UserRequestDto,
-                                                      @AuthenticationPrincipal User user) {
+                                                          @AuthenticationPrincipal User user) {
         UserResponseDto response = userService.updateUserInfo(UserRequestDto, user);
         return ResponseEntity.ok(response);
     }
