@@ -80,6 +80,18 @@ public class QrcodeService {
         }
     }
 
+    public QrimageResponseDto getQrimageInfo(User user, Long qrcodeId) {
+        Qrcode qrcode = qrcodeRepository.findById(qrcodeId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 QR코드를 찾을 수 없습니다."));
+
+        Qrimage qrimage = qrimageRepository.findByQrcode(qrcode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 QR코드에 연결된 이미지가 존재하지 않습니다."));
+
+        validateUser(user, qrcode);
+
+        return QrimageResponseDto.of(qrimage);
+    }
+
     @Transactional(readOnly = true)
     public QrcodeResponseDto getQrcodeById(Long qrcodeId) {
         Qrcode qrcode = qrcodeRepository.findById(qrcodeId)
@@ -87,9 +99,16 @@ public class QrcodeService {
         return QrcodeResponseDto.of(qrcode);
     }
 
-    public void deleteQrcode(Long qrcodeId) {
+    public void deleteQrcode(User user, Long qrcodeId) {
         Qrcode qrcode = qrcodeRepository.findById(qrcodeId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기록을 찾을 수 없습니다."));
+
+        validateUser(user, qrcode);
+
         qrcodeRepository.delete(qrcode);
+    }
+
+    public boolean validateUser(User user, Qrcode qrcode) {
+        return (!qrcode.getEvent().getUser().getUserId().equals(user.getUserId()));
     }
 }
