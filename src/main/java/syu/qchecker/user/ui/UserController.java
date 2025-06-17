@@ -5,10 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import syu.qchecker.user.dto.UserCreateDto;
-import syu.qchecker.user.dto.UserDto;
+import syu.qchecker.user.dto.UserRequestDto;
+import syu.qchecker.user.dto.UserResponseDto;
 import syu.qchecker.user.service.UserService;
-import syu.qchecker.auth.dto.SessionUserDto;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import syu.qchecker.user.domain.User;
@@ -23,28 +22,23 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "회원 가입", description = "소셜 로그인을 통해 회원가입을 합니다.")
-    public ResponseEntity<UserDto.Response> createUser(@RequestBody UserCreateDto createDto) {
-        return ResponseEntity.ok(UserDto.Response.from(userService.createUser(createDto)));
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) {
+        UserResponseDto response = userService.createUser(userRequestDto);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping
     @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
-    public ResponseEntity<UserDto.Response> updateUser(
-            @RequestBody UserDto.Update updateDto,
-            @AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(userService.updateUserByEmail(user.getEmail(), updateDto));
+    public ResponseEntity<UserResponseDto> updateUserInfo(@RequestBody UserRequestDto UserRequestDto,
+                                                      @AuthenticationPrincipal User user) {
+        UserResponseDto response = userService.updateUserInfo(UserRequestDto, user);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
     @Operation(summary = "내 정보 조회", description = "현재 로그인 중인 회원 정보를 조회합니다.")
-    public ResponseEntity<UserDto.Response> getMyInfo(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
-    }
-
-    @GetMapping("/{user_id}/attendances")
-    @Operation(summary = "나의 전체 열람", description = "사용자의 전체 출석 내역을 조회합니다.")
-    public ResponseEntity<String> getUserAttendances(@PathVariable("user_id") Long userId) {
-        return ResponseEntity.ok("출석 내역 조회 성공");
+    public ResponseEntity<UserResponseDto> getMyInfo(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(UserResponseDto.of(user));
     }
 
     @PostMapping("/logout")
