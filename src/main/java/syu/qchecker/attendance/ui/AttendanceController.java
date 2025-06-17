@@ -2,6 +2,7 @@ package syu.qchecker.attendance.ui;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/attendances")
+@RequiredArgsConstructor
 @Tag(name = "출석 기록", description = "출석 기록 관련 API")
 public class AttendanceController {
-    AttendanceService attendanceService;
+    private final AttendanceService attendanceService;
 
     @GetMapping
     @Operation(summary = "유저 전체 출석 내역", description = "현재 유저의 모든 출석 내역을 조회합니다.")

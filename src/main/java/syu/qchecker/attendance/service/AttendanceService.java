@@ -32,7 +32,7 @@ public class AttendanceService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이벤트가 존재하지 않습니다."));
 
-        if (!event.getUser().equals(user)) {
+        if (!event.getUser().getUserId().equals(user.getUserId())) {
             throw new IllegalArgumentException("이벤트 관리자만 접근할 수 있습니다.");
         }
 
