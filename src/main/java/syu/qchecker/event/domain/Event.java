@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import syu.qchecker.common.BaseTimeEntity;
 import syu.qchecker.user.domain.User;
+
 import java.time.LocalDateTime;
 
 @Entity

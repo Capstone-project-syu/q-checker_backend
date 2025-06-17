@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import syu.qchecker.event.dto.EventRequestDto;
-import syu.qchecker.qrcode.domain.Qrimage;
 import syu.qchecker.qrcode.dto.QrcodeRequestDto;
 import syu.qchecker.qrcode.dto.QrcodeResponseDto;
 import syu.qchecker.qrcode.dto.QrimageResponseDto;
