@@ -10,6 +10,8 @@ import syu.qchecker.user.dto.UserDto;
 import syu.qchecker.user.service.UserService;
 import syu.qchecker.auth.dto.SessionUserDto;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import syu.qchecker.user.domain.User;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,18 +27,18 @@ public class UserController {
         return ResponseEntity.ok(UserDto.Response.from(userService.createUser(createDto)));
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping
     @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
     public ResponseEntity<UserDto.Response> updateUser(
-            @PathVariable Long userId,
-            @RequestBody UserDto.Update updateDto) {
-        return ResponseEntity.ok(userService.updateUser(userId, updateDto));
+            @RequestBody UserDto.Update updateDto,
+            @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(userService.updateUserByEmail(user.getEmail(), updateDto));
     }
 
-    @GetMapping("/{userId}")
-    @Operation(summary = "회원 정보 조회", description = "회원 ID로 회원 정보를 조회합니다.")
-    public ResponseEntity<UserDto.Response> getUserById(@PathVariable Long userId) {
-        return ResponseEntity.ok(userService.getUserById(userId));
+    @GetMapping
+    @Operation(summary = "내 정보 조회", description = "현재 로그인 중인 회원 정보를 조회합니다.")
+    public ResponseEntity<UserDto.Response> getMyInfo(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
     }
 
     @GetMapping("/{user_id}/attendances")

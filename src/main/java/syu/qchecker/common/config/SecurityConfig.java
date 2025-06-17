@@ -1,5 +1,6 @@
 package syu.qchecker.common.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,12 +10,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import syu.qchecker.auth.jwt.JwtAuthenticationFilter;
+import syu.qchecker.auth.jwt.JwtTokenProvider;
+import syu.qchecker.user.repository.UserRepository;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtTokenProvider jwtTokenProvider; // ✅ 필드 주입
+    private final UserRepository userRepository;     // ✅ 필드 주입
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -26,28 +35,21 @@ public class SecurityConfig {
             .formLogin(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/", 
-                    "/api/auth/**", 
-                    "/oauth2/**",
-                    "/login/**",
-                    "/css/**",
-                    "/js/**",
-                    "/images/**",
-                    "swagger-ui.html")
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/api/auth/**", "/oauth2/**", "/login/**",
+                                 "/css/**", "/js/**", "/images/**", "swagger-ui.html")
                 .permitAll()
                 .requestMatchers("/api/users/**").authenticated()
                 .anyRequest().permitAll()
             )
             .oauth2Login(oauth -> oauth
                 .loginPage("/")
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .invalidateHttpSession(true)
-            )
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .defaultSuccessUrl("https://api.qchecker.me/api/auth/login-success", true))
+            .logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+            .addFilterBefore(
+                new JwtAuthenticationFilter(jwtTokenProvider, userRepository),
+                UsernamePasswordAuthenticationFilter.class
             );
 
         return http.build();

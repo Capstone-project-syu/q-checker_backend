@@ -38,6 +38,17 @@ public class UserService {
         return UserDto.Response.from(user);
     }
 
+    @Transactional
+    public UserDto.Response updateUserByEmail(String email, UserDto.Update updateDto) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+        user.setName(updateDto.getName());
+        user.setStudentNumber(updateDto.getStudentNumber());
+
+        return UserDto.Response.from(user);
+    }
+
     public UserDto.Response getUserById(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
