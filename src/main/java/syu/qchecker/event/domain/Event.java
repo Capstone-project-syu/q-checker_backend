@@ -3,9 +3,12 @@ package syu.qchecker.event.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import syu.qchecker.common.BaseTimeEntity;
+import syu.qchecker.qrcode.domain.Qrcode;
 import syu.qchecker.user.domain.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -44,4 +47,8 @@ public class Event extends BaseTimeEntity {
 
     @Column(name = "valid_radius", nullable = true, columnDefinition = "FLOAT NULL")
     private Float validRadius;
+
+    @Column
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Qrcode> qrcodes = new ArrayList<>();
 }

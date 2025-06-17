@@ -32,8 +32,14 @@ public class EventService {
     }
 
     public void deleteEvent(User user, Long eventId) {
-        Event event = eventRepository.findByIdAndUser(eventId, user)
+        Event event = eventRepository.findByEventIdAndUser(eventId, user)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이벤트를 찾을 수 없습니다."));
         eventRepository.delete(event);
+    }
+
+    public EventResponseDto getEventInfo(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 이벤트를 찾을 숫 없습니다."));
+        return EventResponseDto.of(event);
     }
 }

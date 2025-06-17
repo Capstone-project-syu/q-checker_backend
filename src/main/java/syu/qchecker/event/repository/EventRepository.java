@@ -7,5 +7,5 @@ import syu.qchecker.user.domain.User;
 import java.util.Optional;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-    Optional<Event> findByIdAndUser(Long eventId, User user);
+    Optional<Event> findByEventIdAndUser(Long eventId, User user);
 }
