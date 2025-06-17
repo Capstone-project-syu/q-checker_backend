@@ -30,8 +30,10 @@ public class UserService {
 
     @Transactional
     public UserResponseDto updateUserInfo(UserRequestDto userRequestDto, User user) {
-        user.setName(userRequestDto.getName());
-        user.setStudentNumber(userRequestDto.getStudentNumber());
-        return UserResponseDto.of(user);
+        User realUser = userRepository.findById(user.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        realUser.setName(userRequestDto.getName());
+        realUser.setStudentNumber(userRequestDto.getStudentNumber());
+        return UserResponseDto.of(realUser);
     }
 } 
