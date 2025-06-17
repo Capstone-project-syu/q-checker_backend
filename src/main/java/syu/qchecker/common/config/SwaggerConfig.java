@@ -21,8 +21,8 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().addList("JWT"))
                 .components(new Components().addSecuritySchemes("JWT", createAPIKeyScheme()))
-                .info(new Info().title("How(HomeWork out) API")
-                        .description("This is How API")
+                .info(new Info().title("Qchecker API")
+                        .description("Qchecker API")
                         .version("v0.0.1")
                         .description("API 명세서입니다.")
                         .contact(new Contact()
