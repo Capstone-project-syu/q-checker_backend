@@ -1,18 +1,16 @@
 package syu.qchecker.user.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import syu.qchecker.common.BaseTimeEntity;
 
 @Entity
 @Table(name = "users")
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,15 +31,6 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "student_number", nullable = true, columnDefinition = "BIGINT NULL")
     private Long studentNumber;
-
-    @Builder
-    public User(String email, String name, String socialType, String socialId, Long studentNumber) {
-        this.email = email;
-        this.name = name;
-        this.socialType = socialType;
-        this.socialId = socialId;
-        this.studentNumber = studentNumber;
-    }
 
     public User update(String name) {
         this.name = name;

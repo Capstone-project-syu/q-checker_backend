@@ -1,15 +1,18 @@
 package syu.qchecker.qrcode.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import syu.qchecker.common.BaseTimeEntity;
 import syu.qchecker.event.domain.Event;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "qr_images")
-@Getter @Setter
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Qrimage extends BaseTimeEntity {
 
     @Id

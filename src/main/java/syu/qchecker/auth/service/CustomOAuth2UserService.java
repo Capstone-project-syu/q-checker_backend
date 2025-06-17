@@ -14,6 +14,7 @@ import syu.qchecker.auth.dto.SessionUserDto;
 import syu.qchecker.auth.jwt.JwtTokenProvider;
 import syu.qchecker.user.domain.User;
 import syu.qchecker.user.repository.UserRepository;
+
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -41,9 +42,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         attributesWithToken.put("token", token);
 
         return new DefaultOAuth2User(
-            Collections.emptySet(),
-            attributesWithToken,
-            attributes.getNameAttributeKey()
+                Collections.emptySet(),
+                attributesWithToken,
+                attributes.getNameAttributeKey()
         );
     }
 
