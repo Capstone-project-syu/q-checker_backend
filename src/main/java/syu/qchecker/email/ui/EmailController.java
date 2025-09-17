@@ -44,10 +44,17 @@ public class EmailController {
     @GetMapping("/status")
     @Operation(
             summary = "이메일 인증 상태 조회",
-            description = "현재 로그인한 사용자의 이메일 인증 상태를 조회합니다."
+            description = "현재 로그인한 사용자의 대학교 이메일 인증 상태를 조회합니다."
     )
     public ResponseEntity<EmailResponseDto> getEmailVerificationStatus(@AuthenticationPrincipal User user) {
-        EmailResponseDto response = emailService.getVerificationStatus(user.getEmail());
+        if (user.getStudentEmail() == null) {
+            return ResponseEntity.ok(EmailResponseDto.builder()
+                    .message("등록된 대학교 이메일이 없습니다.")
+                    .verified(false)
+                    .email(null)
+                    .build());
+        }
+        EmailResponseDto response = emailService.getVerificationStatus(user.getStudentEmail());
         return ResponseEntity.ok(response);
     }
 
