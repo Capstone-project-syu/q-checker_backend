@@ -49,7 +49,7 @@ public class EmailService {
         
         emailVerificationRepository.save(verification);
 
-        //emailSender.sendVerificationEmail(email, verificationCode, university.getName());
+        emailSender.sendVerificationEmail(email, verificationCode, university.getName());
         
         return EmailResponseDto.builder()
                 .message("인증번호가 발송되었습니다. 이메일을 확인해주세요.")
