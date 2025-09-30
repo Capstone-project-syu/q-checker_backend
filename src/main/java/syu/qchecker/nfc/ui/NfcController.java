@@ -41,7 +41,7 @@ public class NfcController {
     @Operation(summary = "nfc 태그 삭제", description = "nfc 태그 정보 등록 해제")
     public ResponseEntity<Void> deleteNfcTag(@AuthenticationPrincipal User user,
                                              @PathVariable("nfcId") Long nfcId) {
-        nfcService.deleteNfc(nfcId);
+        nfcService.deleteNfc(user, nfcId);
         return ResponseEntity.ok().build();
     }
 }

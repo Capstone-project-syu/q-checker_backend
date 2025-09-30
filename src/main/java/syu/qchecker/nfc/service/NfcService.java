@@ -39,9 +39,14 @@ public class NfcService {
     }
 
     @Transactional
-    public void deleteNfc(Long nfcId){
+    public void deleteNfc(User user, Long nfcId){
         Nfc nfc = nfcRepository.findById(nfcId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 NFC를 찾을 수 없습니다."));
+
+        if (!nfc.getEvent().getUser().getUserId().equals(user.getUserId())){
+            throw new RuntimeException("해당 NFC를 삭제할 수 없습니다.");
+        }
+
         nfcRepository.delete(nfc);
     }
 }
