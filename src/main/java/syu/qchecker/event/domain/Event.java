@@ -3,6 +3,7 @@ package syu.qchecker.event.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import syu.qchecker.common.BaseTimeEntity;
+import syu.qchecker.nfc.domain.Nfc;
 import syu.qchecker.qrcode.domain.Qrcode;
 import syu.qchecker.user.domain.User;
 
@@ -51,4 +52,8 @@ public class Event extends BaseTimeEntity {
     @Column
     @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Qrcode> qrcodes = new ArrayList<>();
+
+    @Column
+    @OneToOne(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Nfc nfc;
 }

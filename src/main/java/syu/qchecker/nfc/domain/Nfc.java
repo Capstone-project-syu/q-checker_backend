@@ -23,7 +23,7 @@ public class Nfc extends BaseTimeEntity {
     @Column(name = "status", nullable = true)
     private String status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @Column(name = "event_id", nullable = false)
     private Event event;
 }
