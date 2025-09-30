@@ -36,16 +36,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/api/auth/**", "/oauth2/**", "/login/**",
-                                "/css/**", "/js/**", "/images/**", "swagger-ui.html")
+                        .requestMatchers("/", "/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**",
+                                "/css/**", "/js/**", "/images/**", "/swagger-ui.html")
                         .permitAll()
                         .requestMatchers("/api/users/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                .oauth2Login(oauth -> oauth
-                        .loginPage("/")
-                        .defaultSuccessUrl("https://api.qchecker.me/api/auth/login-success", true))
-                .logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .addFilterBefore(
                         new JwtAuthenticationFilter(jwtTokenProvider, userRepository),
