@@ -47,4 +47,25 @@ public class UserController {
         httpSession.invalidate();
         return ResponseEntity.ok("로그아웃 성공");
     }
+
+    @PostMapping("/verify-student")
+    @Operation(
+            summary = "대학생 인증",
+            description = "인증된 대학교 이메일을 사용하여 대학생 인증을 완료합니다."
+    )
+    public ResponseEntity<UserResponseDto> verifyStudent(@AuthenticationPrincipal User user,
+                                                        @RequestBody UserRequestDto userRequestDto) {
+        UserResponseDto response = userService.updateUserInfo(userRequestDto, user);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/student-status")
+    @Operation(
+            summary = "대학생 인증 상태 확인",
+            description = "현재 사용자의 대학생 인증 상태를 확인합니다."
+    )
+    public ResponseEntity<Boolean> getStudentVerificationStatus(@AuthenticationPrincipal User user) {
+        boolean isVerified = userService.isStudentVerified(user.getUserId());
+        return ResponseEntity.ok(isVerified);
+    }
 }
