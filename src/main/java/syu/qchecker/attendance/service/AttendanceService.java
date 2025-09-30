@@ -8,6 +8,8 @@ import syu.qchecker.attendance.dto.AttendancesResponseDto;
 import syu.qchecker.attendance.repository.AttendanceRepository;
 import syu.qchecker.event.domain.Event;
 import syu.qchecker.event.repository.EventRepository;
+import syu.qchecker.nfc.domain.Nfc;
+import syu.qchecker.nfc.repository.NfcRepository;
 import syu.qchecker.user.domain.User;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
     private final EventRepository eventRepository;
+    private final NfcRepository nfcRepository;
 
     @Transactional(readOnly = true)
     public List<AttendancesResponseDto> getAllAttendancesByUser(User user) {
@@ -63,6 +66,25 @@ public class AttendanceService {
         Attendances attendance = Attendances.builder()
                 .user(user)
                 .event(event)
+                .build();
+
+        Attendances savedAttendances = attendanceRepository.save(attendance);
+        return AttendancesResponseDto.of(savedAttendances);
+    }
+
+    @Transactional
+    public AttendancesResponseDto recordAttendanceByNfc(User user, Long nfcTag) {
+        // 활성화되어 있는 NFC 조회
+        Nfc nfc = nfcRepository.findByExpiredFalseAndNfcTag(nfcTag)
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 NFC 입니다."));
+
+        if (attendanceRepository.existsByUserAndEvent(user, nfc.getEvent())) {
+            throw new IllegalStateException("이미 출석한 이벤트입니다.");
+        }
+
+        Attendances attendance = Attendances.builder()
+                .user(user)
+                .event(nfc.getEvent())
                 .build();
 
         Attendances savedAttendances = attendanceRepository.save(attendance);
