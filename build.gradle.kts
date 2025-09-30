@@ -25,7 +25,6 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -37,6 +36,7 @@ dependencies {
     implementation("com.google.zxing:javase:3.5.2")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation("software.amazon.awssdk:s3:2.20.33")
+    implementation("com.google.firebase:firebase-admin:9.2.0")
 
     compileOnly("org.projectlombok:lombok")
 

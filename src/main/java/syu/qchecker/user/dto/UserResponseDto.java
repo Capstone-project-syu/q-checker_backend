@@ -18,10 +18,10 @@ public class UserResponseDto {
     private Long userId;
     
     @Schema(description = "소셜 로그인 타입", example = "google")
-    private String socialType;
-    
-    @Schema(description = "소셜 계정 ID")
-    private String socialId;
+    private String provider;
+
+    @Schema(description = "Firebase UID")
+    private String firebaseUid;
     
     @Schema(description = "소셜 로그인 이메일", example = "user@gmail.com")
     private String email;
@@ -44,8 +44,8 @@ public class UserResponseDto {
     public static UserResponseDto of(User user) {
         return UserResponseDto.builder()
                 .userId(user.getUserId())
-                .socialType(user.getSocialType())
-                .socialId(user.getSocialId())
+                .provider(user.getProvider())
+                .firebaseUid(user.getFirebaseUid())
                 .email(user.getEmail())
                 .name(user.getName())
                 .studentNumber(user.getStudentNumber())

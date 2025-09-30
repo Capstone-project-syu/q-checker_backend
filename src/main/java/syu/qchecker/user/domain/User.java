@@ -18,11 +18,11 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_id", nullable = false, columnDefinition = "BIGINT COMMENT '유저 고유 id'")
     private Long userId;
 
-    @Column(name = "social_type", nullable = false, columnDefinition = "VARCHAR(50) COMMENT 'google | kakao'")
-    private String socialType;
+    @Column(name = "provider", nullable = false, columnDefinition = "VARCHAR(50) COMMENT 'google | kakao'")
+    private String provider;
 
-    @Column(name = "social_id", nullable = true, columnDefinition = "VARCHAR(100) NULL")
-    private String socialId;
+    @Column(name = "firebase_uid", nullable = true, columnDefinition = "VARCHAR(128) NULL COMMENT 'Firebase UID'")
+    private String firebaseUid;
 
     @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(100) COMMENT '소셜 계정 이메일'")
     private String email;
@@ -43,6 +43,10 @@ public class User extends BaseTimeEntity {
     @Column(name = "university_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     @Builder.Default
     private boolean isStudentVerified = false;
+
+    public Long getId() {
+        return this.userId;
+    }
 
     public User update(String name) {
         this.name = name;

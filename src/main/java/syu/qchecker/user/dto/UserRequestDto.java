@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class UserRequestDto {
     
     @Schema(description = "소셜 로그인 타입", example = "google")
-    private String socialType;
-    
-    @Schema(description = "소셜 계정 ID")
-    private String socialId;
+    private String provider;
+
+    @Schema(description = "Firebase UID")
+    private String firebaseUid;
     
     @Schema(description = "소셜 로그인 이메일", example = "user@gmail.com")
     private String email;

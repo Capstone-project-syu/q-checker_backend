@@ -24,8 +24,8 @@ public class UserService {
         User user = User.builder()
                 .email(userRequestDto.getEmail())
                 .name(userRequestDto.getName())
-                .socialType(userRequestDto.getSocialType())
-                .socialId(userRequestDto.getSocialId())
+                .provider(userRequestDto.getProvider())
+                .firebaseUid(userRequestDto.getFirebaseUid())
                 .studentNumber(userRequestDto.getStudentNumber())
                 .build();
 
