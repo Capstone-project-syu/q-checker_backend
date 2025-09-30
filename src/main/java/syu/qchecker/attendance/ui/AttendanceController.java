@@ -34,6 +34,15 @@ public class AttendanceController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/nfc/{nfcTag}")
+    @Operation(summary = "NFC 출석", description = "NFC를 읽어서 출석합니다.")
+    public ResponseEntity<AttendancesResponseDto> recordAttendanceByNfc(@AuthenticationPrincipal User user,
+                                                                        @PathVariable Long nfcTag){
+        AttendancesResponseDto response = attendanceService.recordAttendanceByNfc(user, nfcTag);
+        return ResponseEntity.ok(response);
+    }
+
+
     @GetMapping("/events/{eventId}")
     @Operation(summary = "이벤트 출석 조회", description = "해당 이벤트의 모든 출석 내역을 조회합니다.")
     public ResponseEntity<List<AttendancesResponseDto>> getAllAttendancesByEvent(@AuthenticationPrincipal User user,
