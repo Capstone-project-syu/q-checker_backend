@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import syu.qchecker.nfc.dto.NfcRegisterDto;
 import syu.qchecker.nfc.dto.NfcRequestDto;
 import syu.qchecker.nfc.dto.NfcResponseDto;
 import syu.qchecker.nfc.service.NfcService;
@@ -21,9 +22,9 @@ public class NfcController {
     @PostMapping("/register")
     @Operation(summary = "NFC 태그 등록", description = "NFC 태그 정보 등록")
     public ResponseEntity<NfcResponseDto> registerNfcTag(@AuthenticationPrincipal User user,
-                                                         @RequestBody NfcRequestDto nfcRequestDto) {
+                                                         @RequestBody NfcRegisterDto nfcRegisterDto) {
         // nfc 태그 id와 이벤트 id 매핑
-        NfcResponseDto response = nfcService.createNfc(user, nfcRequestDto);
+        NfcResponseDto response = nfcService.registerNfc(user, nfcRegisterDto);
         return ResponseEntity.ok(response);
     }
 
