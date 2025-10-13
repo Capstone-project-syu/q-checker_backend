@@ -27,7 +27,7 @@ public class Nfc extends BaseTimeEntity {
     @Column(name = "expired", nullable = false)
     private boolean expired;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @Column(name = "event_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id", nullable = false, columnDefinition = "BIGINT COMMENT '이벤트 고유 id'")
     private Event event;
 }
