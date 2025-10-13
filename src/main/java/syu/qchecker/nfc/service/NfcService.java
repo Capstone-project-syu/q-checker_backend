@@ -11,6 +11,8 @@ import syu.qchecker.nfc.dto.NfcResponseDto;
 import syu.qchecker.nfc.repository.NfcRepository;
 import syu.qchecker.user.domain.User;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class NfcService {
@@ -22,9 +24,21 @@ public class NfcService {
         Event event = eventRepository.findById(nfcRequestDto.getEventId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 이벤트가 존재하지 않습니다."));
 
+        Optional<Nfc> n = nfcRepository.findByExpiredFalseAndNfcTag(nfcRequestDto.getNfcTag());
+
+        if (n.isPresent()){
+            Nfc existingNfc = n.get();
+
+            existingNfc.setExpired(true);
+
+            nfcRepository.save(existingNfc);
+        }
+        // 활성화된 Nfc 존재 시 비활성화 상태로 변경 후 해당 NfcTag 사용
+
         Nfc nfc = Nfc.builder()
                 .nfcTag(nfcRequestDto.getNfcTag())
                 .status(nfcRequestDto.getStatus())
+                .expired(false)
                 .event(event)
                 .build();
         Nfc savedNfc = nfcRepository.save(nfc);

@@ -8,6 +8,7 @@ import syu.qchecker.event.domain.Event;
 @Entity
 @Table(name = "nfc")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -23,7 +24,10 @@ public class Nfc extends BaseTimeEntity {
     @Column(name = "status", nullable = true)
     private String status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @Column(name = "event_id", nullable = false)
+    @Column(name = "expired", nullable = false)
+    private boolean expired;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id", nullable = false, columnDefinition = "BIGINT COMMENT '이벤트 고유 id'")
     private Event event;
 }

@@ -54,6 +54,6 @@ public class Event extends BaseTimeEntity {
     private List<Qrcode> qrcodes = new ArrayList<>();
 
     @Column
-    @OneToOne(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private Nfc nfc;
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Nfc> nfcs = new ArrayList<>();
 }
