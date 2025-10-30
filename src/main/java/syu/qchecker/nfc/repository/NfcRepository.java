@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface NfcRepository extends JpaRepository<Nfc, Long> {
     Optional<Nfc> findByExpiredFalseAndNfcTag(Long nfcTag);
+    Optional<Nfc> findByExpiredFalseAndLectureValue(Long lectureValue);
+
 }

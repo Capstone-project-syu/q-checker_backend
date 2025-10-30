@@ -11,6 +11,8 @@ public class NfcResponseDto {
     private Long nfcTag;
     private String status;
     private Long eventId;
+    private Long lectureValue;
+    private String lecture;
 
     public static NfcResponseDto of(Nfc nfc){
         return NfcResponseDto.builder()
@@ -18,6 +20,8 @@ public class NfcResponseDto {
                 .nfcTag(nfc.getNfcTag())
                 .status(nfc.getStatus())
                 .eventId(nfc.getEvent().getEventId())
+                .lectureValue(nfc.getLectureValue())
+                .lecture(nfc.getLecture())
                 .build();
     }
 }

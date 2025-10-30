@@ -21,6 +21,12 @@ public class Nfc extends BaseTimeEntity {
     @Column(name = "nfc_tag", nullable = false)
     private Long nfcTag;
 
+    @Column(name = "lecture_value", nullable = false)
+    private Long lectureValue;
+
+    @Column(name = "lecture", nullable = false)
+    private String lecture;
+
     @Column(name = "status", nullable = true)
     private String status;
 
